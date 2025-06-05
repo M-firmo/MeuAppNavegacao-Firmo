@@ -5,10 +5,23 @@ import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen';
 import DetailsScreen from './DetailsScreen';
 import ProfileScreen from './ProfileScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
 const Stack = createNativeStackNavigator();
+
+
+const loadLog = async () => {
+  try{
+    const storageLog = await AsyncStorage.getItem('storageLog');
+    if(storageLog !== null) {
+      return storageLog;
+    }
+  } catch (error) {
+    console.log("Erro ao carregar");
+  }
+}
 
 export default function App() {
   return (

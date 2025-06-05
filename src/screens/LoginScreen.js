@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }) {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -8,8 +9,18 @@ export default function LoginScreen({ navigation }) {
     setCredentials({ ...credentials, [field]: value });
   };
 
+  
+
   const handleLogin = () => {
     const { username, password } = credentials;
+
+   const saveLog = async (state) => {
+      try{
+        await AsyncStorage.setItem("loggedIn","true");
+      } catch (error){
+        console.log("Erro ao se cadastrar", error)
+      }
+    }
 
     if (!username || !password) {
       Alert.alert('Atenção', 'Preencha todos os campos');
