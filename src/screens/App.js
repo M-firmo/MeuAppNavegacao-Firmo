@@ -11,22 +11,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
-
-const loadLog = async () => {
-  try{
-    const storageLog = await AsyncStorage.getItem('storageLog');
-    if(storageLog !== null) {
-      return storageLog;
-    }
-  } catch (error) {
-    console.log("Erro ao carregar");
-  }
-}
-
 export default function App() {
+  const [initialRoute, setInitialRoute] = React.useState(null);
+
+  React.useEffect(() => {
+    const checkLogin = async () => {
+      const loggedIn = await AsyncStorage.getItem('loggedIn');
+      setInitialRoute(loggedIn === 'true' ? 'Home' : 'Login');
+    };
+    checkLogin();
+  }, []);
+
+  if (initialRoute === null) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
@@ -34,10 +36,4 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-  <Stack.Screen
-  name="Profile"
-  component={ProfileScreen}
-  options={{ headerShown: false }}
-/>
-
 }

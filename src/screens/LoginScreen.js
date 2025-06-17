@@ -9,18 +9,16 @@ export default function LoginScreen({ navigation }) {
     setCredentials({ ...credentials, [field]: value });
   };
 
-  
-
-  const handleLogin = () => {
-    const { username, password } = credentials;
-
-   const saveLog = async (state) => {
-      try{
-        await AsyncStorage.setItem("loggedIn","true");
-      } catch (error){
-        console.log("Erro ao se cadastrar", error)
-      }
+  const saveLog = async () => {
+    try {
+      await AsyncStorage.setItem("loggedIn", "true");
+    } catch (error) {
+      console.log("Erro ao salvar login", error);
     }
+  };
+
+  const handleLogin = async () => {
+    const { username, password } = credentials;
 
     if (!username || !password) {
       Alert.alert('Atenção', 'Preencha todos os campos');
@@ -28,6 +26,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     if (username === 'Firmo' && password === '102030') {
+      await saveLog();
       navigation.replace('Home');
     } else {
       Alert.alert('Erro', 'Usuário ou senha inválidos');
