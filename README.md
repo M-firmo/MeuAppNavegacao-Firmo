@@ -1,4 +1,4 @@
-# Meu App de Navegação
+# Meu App Navegação
 
 Esta aplicação foi desenvolvida com o objetivo de demonstrar a navegação entre diferentes telas e o uso de **persistência de login**, garantindo que o usuário continue logado mesmo ao fechar e reabrir o aplicativo.
 
